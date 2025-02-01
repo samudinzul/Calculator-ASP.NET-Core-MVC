@@ -1,0 +1,88 @@
+﻿@model CalculatorApp.Models.CalculatorModel
+
+@{
+    ViewData["Title"] = "Calculator";
+}
+
+<style>
+    .calculator {
+        width: 300px;
+        margin: 50px auto;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .display {
+        width: 100%;
+        height: 50px;
+        font-size: 24px;
+        text-align: right;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .button {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 20px;
+        padding: 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+        .button:hover {
+            background-color: #e0e0e0;
+        }
+
+    .operator {
+        background-color: #ff9900;
+        color: white;
+    }
+
+        .operator:hover {
+            background-color: #cc7a00;
+        }
+</style>
+
+<div class="calculator">
+    <input type="text" class="display" value="@Model.CombinedDisplay" readonly />
+    <form method="post" asp-controller="Calculator" asp-action="Calculate">
+        <div class="buttons">
+            @for (int i = 1; i <= 3; i++)
+            {
+                <button type="submit" name="button" value="@i" class="button">@i</button>
+            }
+            <button type="submit" name="button" value="C" class="button">C</button>
+
+            @for (int i = 4; i <= 6; i++)
+            {
+                <button type="submit" name="button" value="@i" class="button">@i</button>
+            }
+            <button type="submit" name="button" value="Backspace" class="button">⌫</button>
+
+            @for (int i = 7; i <= 9; i++)
+            {
+                <button type="submit" name="button" value="@i" class="button">@i</button>
+            }
+            <button type="submit" name="button" value="+" class="button operator">+</button>
+
+            <button type="submit" name="button" value="0" class="button">0</button>
+            <button type="submit" name="button" value="." class="button">.</button> 
+            <button type="submit" name="button" value="-" class="button operator">-</button>
+            <button type="submit" name="button" value="*" class="button operator">*</button>
+            <button type="submit" name="button" value="/" class="button operator">/</button>
+            <button type="submit" name="button" value="=" class="button operator">=</button>
+        </div>
+    </form>
+</div>
