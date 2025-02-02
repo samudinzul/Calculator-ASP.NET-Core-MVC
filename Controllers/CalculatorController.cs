@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CalculatorApp.Models;
-using NCalc;
+using MathNet.Symbolics;
 
 namespace CalculatorApp.Controllers
 {
@@ -207,9 +207,13 @@ namespace CalculatorApp.Controllers
         {
             try
             {
-                // Use NCalc to evaluate the expression
-                var result = new Expression(expression).Evaluate();
-                return Convert.ToDouble(result);
+                // Parse and simplify the expression
+                var symbolicExpr = Infix.ParseOrThrow(expression);
+                var simplifiedExpr = Algebraic.Expand(symbolicExpr);
+
+                // Evaluate the simplified expression
+                var result = Evaluate.Evaluate(null, simplifiedExpr).RealValue;
+                return result;
             }
             catch (Exception ex)
             {
